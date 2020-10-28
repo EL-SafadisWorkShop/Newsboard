@@ -5,6 +5,11 @@ import Article from './Article'
 function App() {
   const [articles, setArticles] = useState([]);
   const [query, setQuery] = useState("");
+  const completeButton = index => { 
+    const newArticles = [...articles]; 
+    newArticles[index].isCompleted = !newArticles[index].isCompleted;
+    setArticles(newArticles);
+  }; 
 
   useEffect(() => {
     fetch("https://hn.algolia.com/api/v1/search?query=react")
@@ -15,7 +20,8 @@ function App() {
             url: result.url,
             author: result.author,
             points: result.points,
-            num_comments: result.num_comments
+            num_comments: result.num_comments, 
+            isCompleted: false,
         }))
       setArticles(newArticles);
       setQuery(response.query);
@@ -33,6 +39,7 @@ function App() {
             key={index}
             index={index}
             article={article}
+            completeButton={completeButton}
           />
           ))}
       </div>
