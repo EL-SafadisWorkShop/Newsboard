@@ -1,6 +1,8 @@
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } 
+import { Navbar, Nav, NavDropdown} 
 from 'react-bootstrap';
-export default function Header(){
+import SearchForm from "./SearchForm";
+
+export default function Header(props){
     return(
 
 <Navbar className="nav-news" collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -23,6 +25,12 @@ export default function Header(){
         <NavDropdown.Divider />
         <NavDropdown.Item href="#action/3.4">Jobs</NavDropdown.Item>
       </NavDropdown>
+      <SearchForm
+      onSubmit={props.handleSubmit}
+      type="text"
+      value={props.value}
+      onChange={props.handleChange}
+      />
     </Nav>
     <Nav>
       <Nav.Link href="#deets">Submit</Nav.Link>
