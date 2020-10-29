@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Header from "./Header";
+
 import './App.css';
 import Article from './Article'
 
@@ -31,7 +33,10 @@ function App() {
 }, []);
   return (
 
-    <div className="App">
+    <>
+    <Header />
+    <div className="App"> 
+        <div className="wrapper"> 
       <div className="sidebar"></div>
       <div className="main-content">
       {articles.map((article, index) => (
@@ -44,6 +49,8 @@ function App() {
           ))}
       </div>
       </div>
+      </div>
+      </>
   );
 }
 
