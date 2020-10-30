@@ -16,19 +16,19 @@ function App() {
   }, []);
 
   useEffect(() => {
- //   if(appCondition !== "start"){
+    if(appCondition !== "start"){
       if (articles.length) {
         setAppCondition("success");
       } else {
         setAppCondition("no-results");
       }
-   // }
+ }
   }, [articles]);
 
   const completeButton = index => { 
     const newArticles = [...articles]; 
     newArticles[index].isCompleted = !newArticles[index].isCompleted;
-   // setArticles(newArticles);
+    setArticles(newArticles);
   }; 
 
   const handleSubmit = (event) => {
