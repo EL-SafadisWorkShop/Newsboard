@@ -7,26 +7,28 @@ function App() {
   const url = "https://hn.algolia.com/api/v1/search?query=";
   const [articles, setArticles] = useState([]);
   const [query, setQuery] = useState("");
-  const [appCondition, setAppCondition] = useState("");
+  const [appCondition, setAppCondition] = useState("start");
 
- useEffect(() => console.log(appCondition), [appCondition])
+ useEffect(() => console.log(`from AppCondition: ${appCondition}`), [appCondition])
 
  useEffect(() => {
     fetchArticles();
   }, []);
 
   useEffect(() => {
-    if (articles.length) {
-      setAppCondition("success");
-    } else {
-      setAppCondition("no-results");
-    }
+ //   if(appCondition !== "start"){
+      if (articles.length) {
+        setAppCondition("success");
+      } else {
+        setAppCondition("no-results");
+      }
+   // }
   }, [articles]);
- 
+
   const completeButton = index => { 
     const newArticles = [...articles]; 
     newArticles[index].isCompleted = !newArticles[index].isCompleted;
-    setArticles(newArticles);
+   // setArticles(newArticles);
   }; 
 
   const handleSubmit = (event) => {
@@ -37,7 +39,7 @@ function App() {
   const conditionSwitch = () => {
     switch (appCondition) {
       case "loading":
-        return (<p>"LOADING..."</p>);
+        return (<p className="p">"LOADING..."</p>);
       case "success":
         return (articles.map((article, index) => (
           <Article
@@ -48,15 +50,16 @@ function App() {
           />
           )));
       case "no-results":
-        return (<p>"Sorry, nothing to see here. Maybe search something more interesting!" </p>);
+        return (<p className="p">"Sorry, nothing to see here. Maybe search something more interesting!" </p>);
       case "error":
-        return  (<p>"ooops...It's an error!"</p>);
+        return  (<p className="p">"ooops...It's an error!"</p>);
       default:
-        return (<p>"something went very very wrong..."</p>);
+        return (<p className="p">"something went very very wrong..."</p>);
     }
   };
 
   const fetchArticles = () => {
+    console.log("fetch is being called")
     setAppCondition("loading");
     fetch(`${url}${query || "react"}`)
       .then((response) => response.json())
