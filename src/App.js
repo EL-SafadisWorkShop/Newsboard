@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
-
-
-import './App.css';
 import Article from './Article'
+import './App.css';
 
 function App() {
   const url = "https://hn.algolia.com/api/v1/search?query=";
   const [articles, setArticles] = useState([]);
   const [query, setQuery] = useState("");
-  const [appCondition, setAppCondition] = useState("loading");
+  const [appCondition, setAppCondition] = useState("");
+
+ useEffect(() => console.log(appCondition), [appCondition])
+
+ useEffect(() => {
+    fetchArticles();
+  }, []);
+
+  useEffect(() => {
+    if (articles.length) {
+      setAppCondition("success");
+    } else {
+      setAppCondition("no-results");
+    }
+  }, [articles]);
  
   const completeButton = index => { 
     const newArticles = [...articles]; 
@@ -20,21 +32,12 @@ function App() {
   const handleSubmit = (event) => {
     event.preventDefault ()
     fetchArticles()
-    console.log("hi")
   }
-
-  useEffect(() => {
-    if (articles.length) {
-      setAppCondition("success");
-    } else {
-      setAppCondition("no-results");
-    }
-  }, [articles]);
 
   const conditionSwitch = () => {
     switch (appCondition) {
       case "loading":
-        return "LOADING";
+        return (<p>"LOADING..."</p>);
       case "success":
         return (articles.map((article, index) => (
           <Article
@@ -45,11 +48,11 @@ function App() {
           />
           )));
       case "no-results":
-        return "no results";
+        return (<p>"Sorry, nothing to see here. Maybe search something more interesting!" </p>);
       case "error":
-        return "error";
+        return  (<p>"ooops...It's an error!"</p>);
       default:
-        return "something is wrong";
+        return (<p>"something went very very wrong..."</p>);
     }
   };
 
