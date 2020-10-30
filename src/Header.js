@@ -3,7 +3,7 @@ from 'react-bootstrap';
 export default function Header(){
     return(
 
-<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+<Navbar className="nav-news" collapseOnSelect expand="lg" bg="dark" variant="dark">
 <img
         src="LogoNewsBoard.png"
         width="30"
